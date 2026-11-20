@@ -1,0 +1,59 @@
+# Copy to vox.toml (auto-loaded from the working directory) or pass --config.
+# Entries with the same name as a built-in replace it.
+
+# An expressive voice cloned from your own recording (5-10 s of clean speech, WAV).
+[[persona]]
+name = "moi"
+description = "Ma propre voix"
+gender = "male"
+accent = "fr-fr"
+voice = { engine = "chatterbox", reference = "voices/moi.wav" }
+
+# An expressive voice whose timbre comes from a lite persona.
+[[persona]]
+name = "nova"
+gender = "female"
+accent = "en-us"
+voice = { engine = "chatterbox", reference = "persona:nova-lite" }
+
+# A designed voice: blend Kokoro style vectors (any weights, auto-normalised).
+[[persona]]
+name = "aurora"
+description = "Breathy, warm storyteller"
+gender = "female"
+accent = "en-us"
+speed = 0.95
+pitch_st = -0.5
+mood = "calm"
+voice = { engine = "kokoro", voices = [{ id = "af_heart", weight = 0.5 }, { id = "af_nicole", weight = 0.5 }] }
+
+# A Piper voice, with a speaker from a multi-speaker model.
+[[persona]]
+name = "lucien"
+description = "Narrateur grave"
+gender = "male"
+accent = "fr-fr"
+pitch_st = -1.5
+mood = "serious"
+voice = { engine = "piper", model = "fr_FR-upmc-medium", speaker = "pierre" }
+
+# A custom mood. Unset fields are neutral.
+[[mood]]
+name = "nervous"
+description = "Quick, shaky and breathy"
+speed = 1.12
+pitch_st = 1.5
+jitter_cents = 18.0
+vibrato_hz = 7.0
+vibrato_cents = 15.0
+tremolo_depth = 0.08
+breathiness = 0.2
+pause_scale = 0.7
+
+[[mood]]
+name = "radio"
+description = "Bright, punchy announcer"
+speed = 1.04
+pitch_range = 1.3
+brightness_db = 4.0
+gain_db = 2.0

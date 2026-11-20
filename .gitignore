@@ -1,0 +1,7 @@
+/target
+/.cargo-home
+/models
+/lib
+/out
+/.claude
+.DS_Store
