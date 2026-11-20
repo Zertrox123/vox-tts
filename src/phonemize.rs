@@ -46,8 +46,12 @@ fn lib_candidates() -> Vec<PathBuf> {
         "/usr/lib/aarch64-linux-gnu/libespeak-ng.so.1",
         "/usr/lib/libespeak-ng.so.1",
         "/usr/local/lib/libespeak-ng.so.1",
+        "/usr/lib64/libespeak-ng.so.1",
         "libespeak-ng.so.1",
         "libespeak-ng.dylib",
+        r"C:\Program Files\eSpeak NG\libespeak-ng.dll",
+        r"C:\Program Files (x86)\eSpeak NG\libespeak-ng.dll",
+        "libespeak-ng.dll",
     ] {
         v.push(PathBuf::from(p));
     }
@@ -56,6 +60,7 @@ fn lib_candidates() -> Vec<PathBuf> {
         if let Some(d) = exe.parent() {
             v.push(d.join("libespeak-ng.dylib"));
             v.push(d.join("libespeak-ng.so.1"));
+            v.push(d.join("libespeak-ng.dll"));
         }
     }
     v.push(PathBuf::from("lib/espeak-ng/lib/libespeak-ng.dylib"));
@@ -64,7 +69,13 @@ fn lib_candidates() -> Vec<PathBuf> {
 }
 
 fn find_cli() -> Option<PathBuf> {
-    for p in ["/opt/homebrew/bin/espeak-ng", "/usr/local/bin/espeak-ng", "/usr/bin/espeak-ng"] {
+    for p in [
+        "/opt/homebrew/bin/espeak-ng",
+        "/usr/local/bin/espeak-ng",
+        "/usr/bin/espeak-ng",
+        r"C:\Program Files\eSpeak NG\espeak-ng.exe",
+        r"C:\Program Files (x86)\eSpeak NG\espeak-ng.exe",
+    ] {
         let p = PathBuf::from(p);
         if p.exists() {
             return Some(p);
@@ -96,6 +107,7 @@ impl Phonemizer {
         bail!(
             "eSpeak NG not found (needed to turn text into phonemes, fully offline).\n  \
              macOS:  brew install espeak-ng\n  Debian/Ubuntu: sudo apt install espeak-ng\n  \
+             Windows: install eSpeak NG from github.com/espeak-ng/espeak-ng/releases\n  \
              or set VOX_ESPEAK_LIB=/path/to/libespeak-ng.(dylib|so).\n  \
              Tip: <ipa>…</ipa> input works without eSpeak.{}",
             if errors.is_empty() { String::new() } else { format!("\n  tried: {}", errors.join("; ")) }

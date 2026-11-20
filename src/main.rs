@@ -154,11 +154,11 @@ fn run() -> Result<()> {
     match &cli.cmd {
         Cmd::Personas => {
             let e = engine(&cli)?;
-            println!("{:<10} {:<8} {:<16} {:<7} {:<34} {}", "NAME", "GENDER", "ACCENT", "ENGINE", "VOICE", "DESCRIPTION");
+            println!("{:<13} {:<8} {:<16} {:<10} {:<34} {}", "NAME", "GENDER", "ACCENT", "ENGINE", "VOICE", "DESCRIPTION");
             for p in e.personas() {
                 let mark = if e.available(p) { "" } else { "  [model missing]" };
                 println!(
-                    "{:<10} {:<8} {:<16} {:<7} {:<34} {}{}",
+                    "{:<13} {:<8} {:<16} {:<10} {:<34} {}{}",
                     p.name,
                     p.gender.to_string(),
                     p.accent.label(),

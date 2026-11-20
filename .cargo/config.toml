@@ -1,3 +1,0 @@
-[env]
-# Static ONNX Runtime fetched by scripts/download_models.sh
-ORT_LIB_LOCATION = { value = "lib/onnxruntime", relative = true }

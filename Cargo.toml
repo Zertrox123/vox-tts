@@ -12,6 +12,12 @@ categories = ["multimedia::audio", "command-line-utilities"]
 name = "vox"
 path = "src/main.rs"
 
+[features]
+default = ["ort-download"]
+# Download a prebuilt static ONNX Runtime for the target at build time (macOS, Linux, Windows).
+# For offline builds: --no-default-features and ORT_LIB_LOCATION=/path/to/onnxruntime
+ort-download = ["ort/download-binaries"]
+
 [dependencies]
 anyhow = "1"
 clap = { version = "4", features = ["derive"] }

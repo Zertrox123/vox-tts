@@ -264,17 +264,29 @@ fn load_opus() -> Result<libloading::Library> {
             "/usr/local/lib/libopus.dylib",
             "/usr/lib/x86_64-linux-gnu/libopus.so.0",
             "/usr/lib/aarch64-linux-gnu/libopus.so.0",
+            "/usr/lib64/libopus.so.0",
             "libopus.so.0",
             "libopus.dylib",
+            "opus.dll",
+            "libopus-0.dll",
+            "libopus.dll",
         ]
         .map(String::from),
     );
+    if let Some(d) = std::env::current_exe().ok().and_then(|e| e.parent().map(|p| p.to_path_buf())) {
+        for n in ["opus.dll", "libopus-0.dll", "libopus.dylib", "libopus.so.0"] {
+            cands.push(d.join(n).display().to_string());
+        }
+    }
     for c in &cands {
         if let Ok(l) = unsafe { libloading::Library::new(c) } {
             return Ok(l);
         }
     }
-    bail!("Opus export needs libopus (brew install opus / apt install libopus0), or set VOX_OPUS_LIB")
+    bail!(
+        "Opus export needs libopus (macOS: brew install opus, Linux: apt install libopus0, \
+         Windows: put opus.dll next to vox.exe), or set VOX_OPUS_LIB"
+    )
 }
 
 fn opus(samples: &[f32], sr: u32, kbps: u32, title: Option<&str>) -> Result<Vec<u8>> {

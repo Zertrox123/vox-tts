@@ -15,14 +15,28 @@ Everything runs locally on CPU. There is no cloud API, and nothing touches the n
 
 ## Setup
 
+Supported platforms: **macOS** (Apple silicon), **Linux** (x86_64, arm64) and **Windows** (x86_64).
+Prebuilt binaries for each platform are attached to every [release](https://github.com/Zertrox123/vox-tts/releases).
+
 ```bash
-scripts/download_models.sh     # ~4.5 GB one time: Chatterbox, Kokoro, Piper, ONNX Runtime
+# macOS / Linux
+scripts/download_models.sh        # ~4.5 GB one time: Chatterbox, Kokoro, Piper
+cargo build --release             # downloads the matching ONNX Runtime automatically
+```
+```powershell
+# Windows (PowerShell)
+powershell -ExecutionPolicy Bypass -File scripts\download_models.ps1
 cargo build --release
 ```
 
 Optional extras:
-- `brew install espeak-ng`: needed only for plain-text input with *lite* personas.
-- `brew install opus`: needed for Opus export.
+
+| Extra | macOS | Linux | Windows |
+|---|---|---|---|
+| eSpeak NG (plain text with *lite* personas) | `brew install espeak-ng` | `apt install espeak-ng` | installer from [espeak-ng releases](https://github.com/espeak-ng/espeak-ng/releases) |
+| libopus (Opus export) | `brew install opus` | `apt install libopus0` | `opus.dll` next to `vox.exe` |
+
+The expressive personas need neither.
 
 ## Usage
 
@@ -103,7 +117,9 @@ The models aren't in this repository. `scripts/download_models.sh` downloads the
 
 Voice cloning: only clone voices you have the right to use.
 
-## Building in a sandbox
+## Offline / air-gapped builds
 
-If `~/.cargo` isn't writable, use `CARGO_HOME=$PWD/.cargo-home cargo build --release`.
-`.cargo/config.toml` points `ORT_LIB_LOCATION` to `lib/onnxruntime`, which the setup script fills in.
+```bash
+scripts/fetch_onnxruntime.sh      # static ONNX Runtime -> lib/onnxruntime (checksum-verified)
+ORT_LIB_LOCATION=$PWD/lib/onnxruntime cargo build --release --no-default-features
+```
