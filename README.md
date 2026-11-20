@@ -90,6 +90,19 @@ Code map: `chatterbox.rs` (expressive engine), `backend.rs` (Kokoro/Piper), `eng
 On CPU, the expressive engine runs at roughly 0.3–0.5× real time on an Apple-silicon laptop. Model loading takes ~20 s per process, so render whole scripts in one `vox say -f` call.
 Lite personas run at 5–13× real time.
 
+## License
+
+The code is MIT; see [LICENSE](LICENSE).
+
+The models aren't in this repository. `scripts/download_models.sh` downloads them, and each keeps its own license:
+- Chatterbox (Resemble AI): MIT
+- Kokoro-82M: Apache-2.0
+- ONNX Runtime: MIT
+- eSpeak NG (optional): GPL-3.0, loaded at runtime and not bundled
+- Piper voices: license depends on the voice, so check each voice's model card on Hugging Face before commercial use
+
+Voice cloning: only clone voices you have the right to use.
+
 ## Building in a sandbox
 
 If `~/.cargo` isn't writable, use `CARGO_HOME=$PWD/.cargo-home cargo build --release`.

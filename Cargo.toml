@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 description = "Offline expressive neural TTS harness: personas, moods, inline mood changes, multi-format export"
 license = "MIT"
+repository = "https://github.com/Zertrox123/vox-tts"
+keywords = ["tts", "text-to-speech", "speech-synthesis", "voice", "onnx"]
+categories = ["multimedia::audio", "command-line-utilities"]
 
 [[bin]]
 name = "vox"
