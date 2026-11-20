@@ -1,6 +1,6 @@
 [package]
 name = "vox"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Offline expressive neural TTS harness: personas, moods, inline mood changes, multi-format export"
 license = "MIT"
